@@ -13,7 +13,7 @@ int main()
        //afficherT(tabr);
 
        parserFichier(tabr, "/media/Documents/loic/MASTER1/S1/ALGO/Projet/Source/", "input.txt");
-       afficherT(tabr);
+          afficherT(tabr);
 
 
 

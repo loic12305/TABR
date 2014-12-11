@@ -22,29 +22,55 @@ void creerCaseVide(TABR &tabr, int deb, int fin)
        tabr.nombreCase++;
 }
 
-void insertionABR(ABR* abr, vector<int>, int debut, int fin)
-{
-    abr->valeur = 0;
-    abr->sag = NULL;
-    abr->sad = NULL;
 
-    //mettre le traitement récursif
+int plusPetit(vector<int> tab, int valeurRacine)
+{
+    int i=0;
+    while(tab[i]<valeurRacine)
+        i++;
+  /*  if(i=0)
+        i=1;
+*/
+    return (i-1);
+}
+
+void insertionABR(ABR* abr, int val)
+{
+//instancier des abr
+    
+  if(abr->valeur == NULL ) //condition d'arret
+    {
+      abr->valeur = val;
+      abr->sad = new ABR;
+      abr->sag= new ABR;
+    }
+  else
+    {
+      if(val < abr->valeur)
+	insertionABR(abr->sag,val);
+      else
+	insertionABR(abr->sad,val);
+    }
+ 
 }
 
 void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
 {
-    Intervalle intervalle;
-    intervalle.debut = deb;
-    intervalle.fin = fin;
-
-    Case c;
-    c.intervalle = intervalle;
-    c.abr = new ABR;
-
-    insertionABR(c.abr, tab, 0, tab.size());
-    tabr.tableau.push_back(c);
-
-    tabr.nombreCase++;
+  Intervalle intervalle;
+  intervalle.debut = deb;
+  intervalle.fin = fin;
+  
+  Case c;
+  c.intervalle = intervalle;
+  c.abr = new ABR;
+  c.abr->valeur=NULL;
+  for(int i=(tab.size()-1);i>=0;i--)
+    {
+      insertionABR(c.abr, tab[i]);
+      cout <<  tab[i] << " ajoute" << endl;
+    }
+  tabr.tableau.push_back(c);
+  tabr.nombreCase++;
 }
 
 void parserFichier(TABR &tabr, string emplacement, string fich)
@@ -71,17 +97,16 @@ void parserFichier(TABR &tabr, string emplacement, string fich)
             int indexDebutNombre = indexFin;
             int indexFinNombre = ligne.find(":", indexDebutNombre);
             do
-            {
+	    {
 	      int nombre = atoi(ligne.substr(indexDebutNombre + 1, indexFinNombre - 1).c_str());
                 //Ajouter les nombres à l'arbre de manière à avoir un arbre biniaire, on utilise un tableau temporaire car la racine si situe à la fin de la ligne
                 tabTemp.push_back(nombre);
                 indexDebutNombre = indexFinNombre;
                 indexFinNombre = ligne.find(":", indexDebutNombre+1);
-                cout << nombre << endl;
+                //cout << nombre << endl;
             }
             while(indexDebutNombre < ligne.size());
-
-            creerCaseArbre(tabr, tabTemp, debutIntervalle, finIntervalle);
+	    creerCaseArbre(tabr, tabTemp, debutIntervalle, finIntervalle);
         }
 
 
