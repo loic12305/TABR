@@ -8,51 +8,35 @@ void initialiser(TABR &tabr)
 }
 
 
-void creerCaseVide(TABR &tabr, int deb, int fin)
+void addNode(node **tree, unsigned int key)
 {
-       Intervalle intervalle;
-       intervalle.debut = deb;
-       intervalle.fin = fin;
+    node *tmpNode;
+    node *tmpTree = *tree;
 
-       Case c;
-       c.intervalle = intervalle;
-       c.abr = NULL;
+    node *elem = new node;
+    elem->key = key;
+    elem->left = NULL;
+    elem->right = NULL;
 
-       tabr.tableau.push_back(c);
-       tabr.nombreCase++;
-}
-
-
-int plusPetit(vector<int> tab, int valeurRacine)
-{
-    int i=0;
-    while(tab[i]<valeurRacine)
-        i++;
-  /*  if(i=0)
-        i=1;
-*/
-    return (i-1);
-}
-
-void insertionABR(ABR* abr, int val)
-{
-//instancier des abr
-    
-  if(abr->valeur == NULL ) //condition d'arret
+    if(tmpTree)
+    do
     {
-      abr->valeur = val;
-      abr->sad = new ABR;
-      abr->sag= new ABR;
+        tmpNode = tmpTree;
+        if(key > tmpTree->key )
+        {
+            tmpTree = tmpTree->right;
+            if(!tmpTree) tmpNode->right = elem;
+        }
+        else
+        {
+            tmpTree = tmpTree->left;
+            if(!tmpTree) tmpNode->left = elem;
+        }
     }
-  else
-    {
-      if(val < abr->valeur)
-	insertionABR(abr->sag,val);
-      else
-	insertionABR(abr->sad,val);
-    }
- 
+    while(tmpTree);
+    else  *tree = elem;
 }
+
 
 void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
 {
@@ -62,15 +46,18 @@ void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
   
   Case c;
   c.intervalle = intervalle;
-  c.abr = new ABR;
-  c.abr->valeur=NULL;
+         
+  node *arbre = NULL;
+  c.abr = arbre;
+
   for(int i=(tab.size()-1);i>=0;i--)
     {
-      insertionABR(c.abr, tab[i]);
+      addNode(&c.abr, tab[i]);
       cout <<  tab[i] << " ajoute" << endl;
     }
   tabr.tableau.push_back(c);
   tabr.nombreCase++;
+  
 }
 
 void parserFichier(TABR &tabr, string emplacement, string fich)
@@ -124,18 +111,18 @@ void afficherT(TABR tabr)
   {
     cout << tabr.tableau[i].intervalle.debut<<" .. "<< tabr.tableau[i].intervalle.fin <<endl;
     cout << ";" << endl;
-    afficherArbreBinaire(tabr.tableau[i].abr);
+    printTree(tabr.tableau[i].abr);
     i++;
   }
 }
 
-
-void afficherArbreBinaire(ABR* abr)
+void printTree(node *tree)
 {
-    if(abr != NULL)
-    {
-        afficherArbreBinaire(abr->sag);
-        afficherArbreBinaire(abr->sad);
-        cout << abr->valeur << endl;
-    }
+    if(!tree) return;
+
+    if(tree->left)  printTree(tree->left);
+
+    printf("Cle = %d\n", tree->key);
+
+    if(tree->right) printTree(tree->right);
 }
