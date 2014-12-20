@@ -6,10 +6,8 @@ int main()
        TABR tabr;
 
        initialiser(tabr);
-       parserFichier(tabr, "/media/Documents/loic/MASTER1/S1/ALGO/Projet/Source/", "input.txt");
-       afficherT(tabr);      
-
-
+       parserFichier(tabr, "input.txt");
+       afficherT(tabr);
 
     return 0;
 }

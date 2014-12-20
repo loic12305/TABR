@@ -8,33 +8,33 @@ void initialiser(TABR &tabr)
 }
 
 
-void addNode(node **tree, unsigned int key)
+void ajouterABR(ArbreBinaire **abr, int valeur)
 {
-    node *tmpNode;
-    node *tmpTree = *tree;
+    ArbreBinaire *tmpNoeud;
+    ArbreBinaire *tmpAbr = *abr;
 
-    node *elem = new node;
-    elem->key = key;
-    elem->left = NULL;
-    elem->right = NULL;
+    ArbreBinaire *elem = new ArbreBinaire;
+    elem->valeur = valeur;
+    elem->sag = NULL;
+    elem->sad = NULL;
 
-    if(tmpTree)
+    if(tmpAbr)
     do
     {
-        tmpNode = tmpTree;
-        if(key > tmpTree->key )
+        tmpNoeud = tmpAbr;
+        if(valeur > tmpAbr->valeur )
         {
-            tmpTree = tmpTree->right;
-            if(!tmpTree) tmpNode->right = elem;
+            tmpAbr = tmpAbr->sad;
+            if(!tmpAbr) tmpNoeud->sad = elem;
         }
         else
         {
-            tmpTree = tmpTree->left;
-            if(!tmpTree) tmpNode->left = elem;
+            tmpAbr = tmpAbr->sag;
+            if(!tmpAbr) tmpNoeud->sag = elem;
         }
     }
-    while(tmpTree);
-    else  *tree = elem;
+    while(tmpAbr);
+    else  *abr = elem;
 }
 
 
@@ -47,26 +47,26 @@ void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
   Case c;
   c.intervalle = intervalle;
          
-  node *arbre = NULL;
+  ArbreBinaire *arbre = NULL;
   c.abr = arbre;
 
   for(int i=(tab.size()-1);i>=0;i--)
     {
-      addNode(&c.abr, tab[i]);
-      cout <<  tab[i] << " ajoute" << endl;
+      ajouterABR(&c.abr, tab[i]);
+      //cout <<  tab[i] << " ajoute" << endl;
     }
   tabr.tableau.push_back(c);
   tabr.nombreCase++;
   
 }
 
-void parserFichier(TABR &tabr, string emplacement, string fich)
+void parserFichier(TABR &tabr, string fich)
 {
-    string entree = emplacement + fich;
     int indexFin = 0;
     string intervalle = "";
 
-    ifstream fichier("/media/Documents/loic/MASTER1/S1/ALGO/Projet/Source/input.txt");
+    ifstream fichier(fich);
+
     if(fichier)
     {
         string ligne;
@@ -90,7 +90,6 @@ void parserFichier(TABR &tabr, string emplacement, string fich)
                 tabTemp.push_back(nombre);
                 indexDebutNombre = indexFinNombre;
                 indexFinNombre = ligne.find(":", indexDebutNombre+1);
-                //cout << nombre << endl;
             }
             while(indexDebutNombre < ligne.size());
 	    creerCaseArbre(tabr, tabTemp, debutIntervalle, finIntervalle);
@@ -109,20 +108,21 @@ void afficherT(TABR tabr)
   int i = 0;
   while(i < tabr.nombreCase)
   {
-    cout << tabr.tableau[i].intervalle.debut<<" .. "<< tabr.tableau[i].intervalle.fin <<endl;
-    cout << ";" << endl;
-    printTree(tabr.tableau[i].abr);
+    cout << tabr.tableau[i].intervalle.debut<<":"<< tabr.tableau[i].intervalle.fin;
+    cout << ";";
+    afficherABR(tabr.tableau[i].abr);
+    cout << endl;
     i++;
   }
 }
 
-void printTree(node *tree)
+void afficherABR(ArbreBinaire *abr)
 {
-    if(!tree) return;
+    if(!abr) return;
 
-    if(tree->left)  printTree(tree->left);
+    if(abr->sag)  afficherABR(abr->sag);
 
-    printf("Cle = %d\n", tree->key);
+    cout << abr->valeur << ":";
 
-    if(tree->right) printTree(tree->right);
+    if(abr->sad) afficherABR(abr->sad);
 }

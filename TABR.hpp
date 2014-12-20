@@ -9,12 +9,12 @@ using namespace std;
 #ifndef TABR_HPP
 #define TABR_HPP
 
-typedef struct node
+typedef struct ArbreBinaire
 {
-    unsigned int key;
-    struct node *left;
-    struct node *right;
-} node ;
+    int valeur;
+    struct ArbreBinaire *sag;
+    struct ArbreBinaire *sad;
+} ArbreBinaire ;
 
 struct Intervalle{
        int debut;
@@ -23,7 +23,7 @@ struct Intervalle{
 
 struct Case{
        Intervalle intervalle;
-       node *abr;
+       ArbreBinaire *abr;
        };
 
 struct TABR{
@@ -34,7 +34,7 @@ struct TABR{
 void initialiser(TABR &tabr);
 void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin);
 void afficherT(TABR tabr);
-void parserFichier(TABR &tabr, string emplacement, string fich);
-void addNode(node **tree, unsigned int key);
-void printTree(node *tree);
+void parserFichier(TABR &tabr, string fich);
+void ajouterABR(ArbreBinaire **abr, int valeur);
+void afficherABR(ArbreBinaire *abr);
 #endif
