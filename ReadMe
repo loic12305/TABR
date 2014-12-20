@@ -1,0 +1,3 @@
+Option pour compiler : 
+       g++ main.cpp -std=c++0x -o bin/pgm
+
