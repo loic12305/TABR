@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <limits.h>
 
 using namespace std;
 
@@ -37,4 +38,9 @@ void afficherT(TABR tabr);
 void parserFichier(TABR &tabr, string fich);
 void ajouterABR(ArbreBinaire **abr, int valeur);
 void afficherABR(ArbreBinaire *abr);
+bool verifierTABR(ArbreBinaire *abr);
+bool verifierABR(ArbreBinaire *abr, Intervalle i);
+bool verifierABRGauche(ArbreBinaire *abr, Intervalle i, int racine);
+bool verifierABRDroit(ArbreBinaire *abr, Intervalle i, int racine);
+
 #endif

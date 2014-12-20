@@ -8,6 +8,7 @@ void initialiser(TABR &tabr)
 }
 
 
+/* On est obligé de mettre un "pointeur de pointeur" car on veut agir sur le pointeur du TABR par référence */
 void ajouterABR(ArbreBinaire **abr, int valeur)
 {
     ArbreBinaire *tmpNoeud;
@@ -126,3 +127,89 @@ void afficherABR(ArbreBinaire *abr)
 
     if(abr->sad) afficherABR(abr->sad);
 }
+
+bool verifierABRGauche(ArbreBinaire *abr, Intervalle i, int racine)
+{
+  if(!abr)
+    return true;
+  else
+  {
+    if((abr->valeur < racine) && (abr->valeur >= i.debut) && (abr->valeur <= i.fin))
+    {
+      bool res1 = verifierABRGauche(abr->sag, i, abr->valeur);
+      bool res2 = verifierABRDroit(abr->sad, i, abr->valeur);
+      return (res1 && res2);
+    }
+    else
+      return false;
+  }
+}
+
+bool verifierABRDroit(ArbreBinaire *abr, Intervalle i, int racine)
+{
+  if(!abr)
+    return true;
+  else
+  {
+    if((abr->valeur > racine) && (abr->valeur >= i.debut) && (abr->valeur <= i.fin))
+    {
+      bool res1 = verifierABRGauche(abr->sag, i, abr->valeur);
+      bool res2 = verifierABRDroit(abr->sad, i, abr->valeur);
+      return (res1 && res2);
+    }
+    else
+      return false;
+  }
+}
+
+bool verifierABR(ArbreBinaire *abr, Intervalle i)
+{
+  if(!abr)
+    return true;
+  else
+  {
+    //si la valeur du noeud respecte les contraintes de l'intervalle, alors on vérifie les noeuds du SAG et du SAD
+    if((abr->valeur >= i.debut) && (abr->valeur <= i.fin))
+    {
+      cout << abr->valeur << endl;
+      bool res1 = verifierABRGauche(abr->sag, i, abr->valeur);
+      bool res2 = verifierABRDroit(abr->sad, i, abr->valeur);
+      return (res1 && res2);
+    }
+    else
+      return false;
+  }
+}
+
+bool verifierTABR(TABR tabr)
+{
+  bool resIntervalle = true;
+  bool resAbr = true;
+  int finTmp = INT_MIN;
+  int i = 0;
+
+  while(i < tabr.nombreCase && resIntervalle == true && resAbr == true)
+  {
+    //Verifie propriété b et c : si debut>fin-1 et fin>debut alors fin>fin-1 donc disjoints et croissant
+    if(tabr.tableau[i].intervalle.debut > finTmp)
+    {
+      //Verifie propriété a : debut > fin
+      if(tabr.tableau[i].intervalle.debut > tabr.tableau[i].intervalle.fin)
+        resIntervalle = false;
+    }
+    else
+      resIntervalle = false;
+
+    finTmp = tabr.tableau[i].intervalle.fin;
+    //On teste la composition de l'arbre que si l'intervalle est correcte
+    if(resIntervalle == true)
+      resAbr = verifierABR(tabr.tableau[i].abr, tabr.tableau[i].intervalle);
+    cout << i << endl;
+    i++;
+  }
+
+  return (resIntervalle && resAbr);
+}
+
+
+
