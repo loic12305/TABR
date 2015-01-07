@@ -1,8 +1,8 @@
 #include "TABR.cpp"
 
-
 int main()
 {
+
 
   generer_aleatoire(4,80);
   // TABR tabr;
