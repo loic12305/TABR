@@ -34,10 +34,10 @@ struct TABR{
 
 void initialiser(TABR &tabr);
 void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin);
-void afficherT(TABR tabr);
+string afficherT(TABR tabr);
 void parserFichier(TABR &tabr, string fich);
 void ajouterABR(ArbreBinaire **abr, int valeur);
-void afficherABR(ArbreBinaire *abr);
+string afficherABR(ArbreBinaire *abr);
 bool verifierTABR(ArbreBinaire *abr);
 bool verifierABR(ArbreBinaire *abr, Intervalle i);
 bool verifierABRGauche(ArbreBinaire *abr, Intervalle i, int racine);
