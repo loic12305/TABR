@@ -237,25 +237,13 @@ void generer_aleatoire(int n, int m)
   //
   // CREATION D'UN TABLEAU DE nb_rand RAND
   //
-  nombre_aleatoire = rand()%(m-1)+1;
-  tab_rand.push_back(nombre_aleatoire);
-  for(int i=2;i<=nb_rand;i++)
+  for(int i=1;i<=nb_rand;i++)
     {
       nombre_aleatoire = rand()%(m-1)+1;
-     
-      for(int y=0;y<tab_rand.size();y++)
-	if(nombre_aleatoire == tab_rand.at(y))
-	  existe = true;
-      
-      if(!existe)
-	{
-	  tab_rand.push_back(nombre_aleatoire);
-	}
+      if(estPresent(tab_rand,nombre_aleatoire))
+	i--;
       else
-	{
-	  existe = false;
-	  i--;	  
-	}
+	  tab_rand.push_back(nombre_aleatoire);
     }
 
 
@@ -303,47 +291,44 @@ void generer_aleatoire(int n, int m)
 
   // On obtient un TABR de n case avec les intervals : reste à creer les arbres
 
-  for(int y=0;y<tab_rand.size();y++)
-    cout<<tab_rand.at(y)<<"    "<<endl;
+  // for(int y=0;y<tab_rand.size();y++)
+  //   cout<<tab_rand.at(y)<<"    "<<endl;
   
   
   for(int i=0 ; i<tabr.nombreCase ;i++)
     {
-      cout<<"intervalle"<<endl;
       cout<<tabr.tableau.at(i).intervalle.debut<<".."<<tabr.tableau.at(i).intervalle.fin<<endl;
       nb_elmt_max = tabr.tableau.at(i).intervalle.fin - tabr.tableau.at(i).intervalle.debut; //nb element max de l'arbre
       nb_elmt = rand()%(nb_elmt_max-1)+1; //nb element random
       cout<<nb_elmt<<endl; // nb le rand à generer
 
-      for(int y=1; y<=nb_elmt; y++)
-	{
+      tab_rand.clear();
+ 
+      for(int z=0;z<nb_elmt;z++)
+      	{
 	  nombre_aleatoire = rand()%(tabr.tableau.at(i).intervalle.fin-tabr.tableau.at(i).intervalle.debut)+tabr.tableau.at(i).intervalle.debut;
-	  ajouterABR(&tabr.tableau.at(i).abr, nombre_aleatoire);
+	  if(estPresent(tab_rand,nombre_aleatoire))
+      	    z--;
+      	  else
+      	    tab_rand.push_back(nombre_aleatoire);
+	  
 	}
+      for(int j=0 ; j<tab_rand.size() ; j++)
+	ajouterABR(&tabr.tableau.at(i).abr, tab_rand[j]);
 
+      cout<<endl;
     }
-  
-  
-  // for(int y=0;y<tab_rand.size();y++)
-  //   cout<<tab_rand.at(y)<<"    "<<endl;
-
-
-
-  
-  // nb_elmt_max = intervalle.fin - intervalle.debut; //nb element max de l'arbre
-  // nb_elmt = rand()%(intervalle.fin-intervalle.debut)+intervalle.debut; //nb element random
-      
 
   int i = 0;
-  while(i < tabr.nombreCase)
-  {
-    cout << tabr.tableau[i].intervalle.debut<<":"<< tabr.tableau[i].intervalle.fin;
-    cout << ";";
-    afficherABR(tabr.tableau[i].abr);
-    cout << endl;
-    i++;
-  }
-
-
+  
+   afficherT(tabr);
 }
 
+
+bool estPresent(vector<int> tab,int n)
+{
+      for(int y=0;y<tab.size();y++)
+	if(n == tab.at(y))
+	  return true;
+      return false;
+}
