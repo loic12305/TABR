@@ -1,9 +1,14 @@
 #include <iostream>
 #include <stdlib.h>
+#include <cstdlib>
+#include <time.h>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <limits.h>
+#include <algorithm>    
+#include <vector>       
+
 
 using namespace std;
 
@@ -42,5 +47,5 @@ bool verifierTABR(ArbreBinaire *abr);
 bool verifierABR(ArbreBinaire *abr, Intervalle i);
 bool verifierABRGauche(ArbreBinaire *abr, Intervalle i, int racine);
 bool verifierABRDroit(ArbreBinaire *abr, Intervalle i, int racine);
-
+void generer_aleatoire(int cases, int max);
 #endif

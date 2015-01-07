@@ -212,4 +212,124 @@ bool verifierTABR(TABR tabr)
 }
 
 
+///////////////////////////////////////////////
+// Générer tout un TABR de maniere aléatoire //
+///////////////////////////////////////////////
+void generer_aleatoire(int n, int m)
+{
+  int nb_elmt_max,nb_elmt,nb_rand,nombre_aleatoire;
+  TABR tabr;
+  bool existe;
+  vector<int> tab_rand;
+  
+  initialiser(tabr); // initialise un TABR
+  srand(time(0));
+  // ajouter 'n' cases au tableau
+  tabr.nombreCase=n;
+
+  // on genere (n*2)-2 nombre aléatoire
+  nb_rand = (n*2)-2;
+
+
+  //
+  // CREATION D'UN TABLEAU DE nb_rand RAND
+  //
+  nombre_aleatoire = rand()%(m-1)+1;
+  tab_rand.push_back(nombre_aleatoire);
+  for(int i=2;i<=nb_rand;i++)
+    {
+      nombre_aleatoire = rand()%(m-1)+1;
+     
+      for(int y=0;y<tab_rand.size();y++)
+	if(nombre_aleatoire == tab_rand.at(y))
+	  existe = true;
+      
+      if(!existe)
+	{
+	  tab_rand.push_back(nombre_aleatoire);
+	}
+      else
+	{
+	  existe = false;
+	  i--;	  
+	}
+      
+
+    }
+
+
+
+  //trie tab_rand
+  sort(tab_rand.begin(),tab_rand.end());
+
+  //on cree la premier case en dehors de la boucle 
+  //creer un interval
+  Intervalle intervalle;
+  intervalle.debut = 1;
+  intervalle.fin = tab_rand.at(0);
+  // creer la premiere case
+  Case c;
+  c.intervalle = intervalle;
+  ArbreBinaire *arbre = NULL; //cree un arbre
+  c.abr = arbre; //ajout de l'arbre
+  tabr.tableau.push_back(c); //ajout de la case au tabr
+  tabr.nombreCase++;
+     
+  //initialiser les case du TABR
+  for(int i=1; i<nb_rand-1; i++)
+    {
+      //creer un interval
+      Intervalle intervalle;
+      //tire un nombre aleatoire
+      
+      intervalle.debut = tab_rand.at(i);
+      i++;
+      intervalle.fin = tab_rand.at(i);
+
+      Case c;      //cree la case
+      c.intervalle = intervalle;
+
+      ArbreBinaire *arbre = NULL; //cree un arbre
+      
+      c.abr = arbre; //ajout de l'arbre
+      tabr.tableau.push_back(c); //ajout de la case au tabr
+      tabr.nombreCase++;
+    } // end for
+
+  // creer la derniere case
+  Intervalle intervalle;
+  intervalle.debut = tab_rand.at(nb_rand-1);
+  intervalle.fin = m;
+  Case c;
+  c.intervalle = intervalle;
+  ArbreBinaire *arbre = NULL; //cree un arbre
+  c.abr = arbre; //ajout de l'arbre
+  tabr.tableau.push_back(c); //ajout de la case au tabr
+  tabr.nombreCase++;
+     
+
+  // On obtient un TABR de n case avec les intervals : reste à creer les arbres
+  
+
+  for(int i=0 ; i<tabr.nombreCase ;i++)
+    {
+      nb_elmt_max = intervalle.fin - intervalle.debut; //nb element max de l'arbre
+      nb_elmt = rand()%(nb_elmt_max-1)+1; //nb element random
+      cout<<nb_elmt<<endl;
+
+    }
+  
+  
+  for(int y=0;y<tab_rand.size();y++)
+    cout<<tab_rand.at(y)<<"    "<<endl;
+
+
+
+  
+  // nb_elmt_max = intervalle.fin - intervalle.debut; //nb element max de l'arbre
+  // nb_elmt = rand()%(intervalle.fin-intervalle.debut)+intervalle.debut; //nb element random
+      
+
+
+}
 
