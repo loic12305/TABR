@@ -350,15 +350,12 @@ void generer_aleatoire(int n, int m)
 
   // On obtient un TABR de n case avec les intervals : reste à creer les arbres
 
-  // for(int y=0;y<tab_rand.size();y++)
-  //   cout<<tab_rand.at(y)<<"    "<<endl;
-  
-  
   for(int i=0 ; i<tabr.nombreCase ;i++)
     {
       cout<<tabr.tableau.at(i).intervalle.debut<<".."<<tabr.tableau.at(i).intervalle.fin<<endl;
-      nb_elmt_max = tabr.tableau.at(i).intervalle.fin - tabr.tableau.at(i).intervalle.debut; //nb element max de l'arbre
+      nb_elmt_max = (tabr.tableau.at(i).intervalle.fin - tabr.tableau.at(i).intervalle.debut) +1; //nb element max de l'arbre
       nb_elmt = rand()%(nb_elmt_max-1)+1; //nb element random
+      //cout<<"::::::::::::::"<<rand()%6<<endl; // nb le rand à generer
       cout<<nb_elmt<<endl; // nb le rand à generer
 
       tab_rand.clear();
@@ -380,7 +377,7 @@ void generer_aleatoire(int n, int m)
 
   int i = 0;
   
-   afficherT(tabr);
+  cout<<afficherT(tabr);
 }
 
 
