@@ -39,11 +39,22 @@ void ajouterABR(ArbreBinaire **abr, int valeur)
 }
 
 
+void suffixe_abr(ArbreBinaire *abr, vector<int> &res)
+{
+  if(abr->sag) suffixe_abr(abr->sag, res);
+
+  if(abr->sad) suffixe_abr(abr->sad, res);
+
+  res.push_back(abr->valeur);
+}
+
+
 void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
 {
   Intervalle intervalle;
   intervalle.debut = deb;
   intervalle.fin = fin;
+  vector<int> suffixe;
   
   Case c;
   c.intervalle = intervalle;
@@ -51,13 +62,34 @@ void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
   ArbreBinaire *arbre = NULL;
   c.abr = arbre;
 
-  for(int i=(tab.size()-1);i>=0;i--)
+  for(int i = (tab.size()-1); i>=0; i--)
     {
       ajouterABR(&c.abr, tab[i]);
     }
-  tabr.tableau.push_back(c);
-  tabr.nombreCase++;
+
+  bool test = true;
+  suffixe.clear();
+  suffixe_abr(c.abr, suffixe);
+
+  //ils ont forcement la meme taille
+  for(int j=0; j<suffixe.size(); j++)
+    {
+      if(tab[j] != suffixe[j])
+	{
+	  test = false;
+	}
+    }
   
+  if(test)
+    {
+      tabr.tableau.push_back(c);
+      tabr.nombreCase++;
+      cout << "ajout de la ligne OK" << endl;
+    }
+  else
+    {
+      cout << "La ligne n'est pas bien formé " << endl;
+    }
 }
 
 void parserFichier(TABR &tabr, string fich)
@@ -94,8 +126,6 @@ void parserFichier(TABR &tabr, string fich)
 	  while(indexDebutNombre < ligne.size());
 	  creerCaseArbre(tabr, tabTemp, debutIntervalle, finIntervalle);
         }
-
-
     }
   else
     {
@@ -186,6 +216,13 @@ bool verifierABR(ArbreBinaire *abr, Intervalle i)
     }
 }
 
+
+/*
+ * Dans notre cas, verifier TABR ne teste finalement que les intervalles,
+ * En effet, dans notre construction de l'ABR, il est toujours correct.
+ * Pour verifier le fichier, il faut faire un parcours suffixe des arbres 
+ * et compare avec la ligne correspondante du fichier (fait lors de l'insertion).
+ */
 bool verifierTABR(TABR tabr)
 {
   bool resIntervalle = true;
