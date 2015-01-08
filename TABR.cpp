@@ -84,7 +84,7 @@ void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
     {
       tabr.tableau.push_back(c);
       tabr.nombreCase++;
-      cout << "ajout de la ligne OK" << endl;
+      //cout << "ajout de la ligne OK" << endl;
     }
   else
     {
@@ -387,4 +387,39 @@ bool estPresent(vector<int> tab,int n)
 	if(n == tab.at(y))
 	  return true;
       return false;
+}
+
+
+void tabrToAbr(TABR tabr)
+{
+  ofstream fichier("tabr_to_abr.txt", ios::out | ios::trunc);
+
+  if(fichier)
+    {
+      ArbreBinaire *tmp = NULL;
+      //on parcour les case de gauche a droite
+      for(int i=tabr.nombreCase-1 ; i>0 ; i--)
+	 { 
+	//   //on recupere l'adresse de la racine
+	//   //on la colle au sad du max de l'arbre de la case d'avant
+
+	//   //on se place au maximum de l'arbre d'avant
+	   tmp = tabr.tableau.at(i-1).abr;
+	   while(tmp->sad != NULL)
+	    {
+	       tmp = tmp->sad;    
+	    }
+	   // tmp contient le noeud max
+	   tmp->sad = tabr.tableau.at(i).abr;
+
+	  // //tmp est le max de la case i--
+	   tmp->sad=tabr.tableau.at(i).abr;
+	}
+
+      cout<<afficherABR(tabr.tableau[0].abr)<<endl;
+        fichier << afficherABR(tabr.tableau[0].abr);
+      fichier.close();
+    }
+  else
+    cerr << "Impossible d'ouvrir le fichier !" << endl;
 }
