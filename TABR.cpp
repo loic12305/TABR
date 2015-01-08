@@ -264,9 +264,9 @@ string afficherABR(ArbreBinaire *abr)
 
   if(abr->sag)  resultat += afficherABR(abr->sag);
 
-  resultat = resultat + to_string(abr->valeur) + ":";
-
   if(abr->sad) resultat += afficherABR(abr->sad);
+
+  resultat = resultat + to_string(abr->valeur) + ":";
 
   return(resultat);
 }
