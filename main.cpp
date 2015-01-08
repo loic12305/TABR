@@ -7,8 +7,9 @@ int main()
 
        initialiser(tabr);
        parserFichier(tabr, "input.txt");
-       //       tabrToAbr(tabr);
-       //     cout << afficherT(tabr);
+       // fusionTABR(tabr,2);
+       //   tabrToAbr(tabr);
+       // cout << afficherT(tabr);
        //bool res = verifierTABR(tabr);
 
        exportTABR(tabr);

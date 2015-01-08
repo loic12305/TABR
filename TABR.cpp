@@ -441,34 +441,48 @@ bool estPresent(vector<int> tab,int n)
 }
 
 
+///////////////////////////////
+// Fusion la case i avec i+1 //
+///////////////////////////////
+void fusionTABR(TABR tabr,int indice)
+{
+
+  ArbreBinaire *tmp = NULL;
+  
+  if(indice >= tabr.nombreCase)
+    cerr<<"Indice invalide"<<endl;
+  else
+    {
+      //fusion de l'intervalle dans indice
+      tabr.tableau[indice].intervalle.fin = tabr.tableau[indice+1].intervalle.fin;
+      //   //on se place au maximum de l'arbre
+      tmp = tabr.tableau.at(indice).abr;
+      while(tmp->sad != NULL)
+	tmp = tmp->sad;    
+
+      // tmp contient le noeud max
+      //on ajoute a sad de max l'arbre i+1
+      tmp->sad = tabr.tableau.at(indice+1).abr;
+      //   cout<<afficherABR(tabr.tableau[indice].abr)<<endl;
+     
+    }
+}
+
+
+////////////////////////////////////////////
+// Fusion tout les arbres avec le premier //
+////////////////////////////////////////////
 void tabrToAbr(TABR tabr)
 {
   ofstream fichier("tabr_to_abr.txt", ios::out | ios::trunc);
-
   if(fichier)
     {
-      ArbreBinaire *tmp = NULL;
-      //on parcour les case de gauche a droite
+      //on utilise la fonction fusion
       for(int i=tabr.nombreCase-1 ; i>0 ; i--)
-	 { 
-	//   //on recupere l'adresse de la racine
-	//   //on la colle au sad du max de l'arbre de la case d'avant
+	fusionTABR(tabr,i-1);
 
-	//   //on se place au maximum de l'arbre d'avant
-	   tmp = tabr.tableau.at(i-1).abr;
-	   while(tmp->sad != NULL)
-	    {
-	       tmp = tmp->sad;    
-	    }
-	   // tmp contient le noeud max
-	   tmp->sad = tabr.tableau.at(i).abr;
-
-	  // //tmp est le max de la case i--
-	   tmp->sad=tabr.tableau.at(i).abr;
-	}
-
-      cout<<afficherABR(tabr.tableau[0].abr)<<endl;
-        fichier << afficherABR(tabr.tableau[0].abr);
+      cout << afficherABR(tabr.tableau[0].abr)<<endl;;
+      fichier << afficherABR(tabr.tableau[0].abr);
       fichier.close();
     }
   else
