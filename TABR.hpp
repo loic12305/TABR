@@ -8,7 +8,7 @@
 #include <limits.h>
 #include <algorithm>    
 #include <vector>       
-
+#include <limits>
 
 using namespace std;
 
@@ -51,4 +51,6 @@ void exportTABR(TABR tabr);
 void generer_aleatoire(int cases, int max);
 bool estPresent(vector<int> tab,int n);
 void tabrToAbr(TABR tabr);
+bool insertionEntier(TABR &tabr, int val);
+
 #endif

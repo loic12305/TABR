@@ -11,6 +11,7 @@ void initialiser(TABR &tabr)
 /* On est obligé de mettre un "pointeur de pointeur" car on veut agir sur le pointeur du TABR par référence */
 void ajouterABR(ArbreBinaire **abr, int valeur)
 {
+  bool stop = false;
   ArbreBinaire *tmpNoeud;
   ArbreBinaire *tmpAbr = *abr;
 
@@ -23,18 +24,27 @@ void ajouterABR(ArbreBinaire **abr, int valeur)
     do
       {
         tmpNoeud = tmpAbr;
-        if(valeur > tmpAbr->valeur )
+        if(valeur == tmpAbr->valeur)
 	  {
-            tmpAbr = tmpAbr->sad;
-            if(!tmpAbr) tmpNoeud->sad = elem;
+	    //lorsqu'il y'a doublon, on n'ajoute pas la valeur
+	    cout << "Doublon : " << valeur << ", la valeur n'est pas ajouté" << endl;
+	    stop = true;
 	  }
-        else
+	else
 	  {
-            tmpAbr = tmpAbr->sag;
-            if(!tmpAbr) tmpNoeud->sag = elem;
+	    if(valeur > tmpAbr->valeur )
+	      {
+		tmpAbr = tmpAbr->sad;
+		if(!tmpAbr) tmpNoeud->sad = elem;
+	      }
+	    else
+	      {
+		tmpAbr = tmpAbr->sag;
+		if(!tmpAbr) tmpNoeud->sag = elem;
+	      }
 	  }
       }
-    while(tmpAbr);
+    while(tmpAbr and !stop);
   else  *abr = elem;
 }
 
@@ -235,6 +245,47 @@ void exportTABR(TABR tabr)
     }
   else
     cerr << "Impossible d'ouvrir le fichier !" << endl;
+}
+
+bool insertionEntier(TABR &tabr, int val)
+{
+  int entree;
+  bool test = false;
+  bool resultat = false;
+  int i = 0;
+
+  cout << "*********Insertion d'un entier*********" << endl;
+  //test si la valeur est un entier
+  while (!test)
+    {
+      cout << "Entrez l'entier a inserer" << endl;
+      cin >> entree;
+      if(cin.fail())
+	{
+	  cout << "mauvaise entree, la valeur attendue est un entier" << endl;
+	  cin.clear();
+	  cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+	}
+      else
+	{
+	  test = true;
+	}
+    }
+
+  while(i < tabr.nombreCase && resultat == false)
+    {
+      cout << tabr.tableau[i].intervalle.debut << " ";
+      cout << tabr.tableau[i].intervalle.fin << endl;
+      //On cherche la bonne intervalle
+      if((tabr.tableau[i].intervalle.debut <= entree) && (tabr.tableau[i].intervalle.fin >= entree))
+	{
+	  ajouterABR(&tabr.tableau[i].abr, entree);
+	  resultat = true;
+	}
+      i++;
+    }
+
+  return(resultat);
 }
 
 string afficherT(TABR tabr)
