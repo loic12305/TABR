@@ -390,6 +390,35 @@ bool estPresent(vector<int> tab,int n)
 }
 
 
+
+void fusionTABR(TABR tabr,int indice)
+{
+
+  ArbreBinaire *tmp = NULL;
+  
+  if(indice >= tabr.nombreCase)
+    cerr<<"Indice invalide"<<endl;
+  else
+    {
+      //fusion de l'intervalle dans indice
+      tabr.tableau[indice].intervalle.fin = tabr.tableau[indice+1].intervalle.fin;
+      //   //on se place au maximum de l'arbre
+      tmp = tabr.tableau.at(indice).abr;
+      while(tmp->sad != NULL)
+	{
+	  tmp = tmp->sad;    
+	}
+      // tmp contient le noeud max
+      tmp->sad = tabr.tableau.at(indice+1).abr;
+      //      cout<<afficherABR(tabr.tableau[0].abr)<<endl;
+     
+    }
+
+
+}
+
+
+
 void tabrToAbr(TABR tabr)
 {
   ofstream fichier("tabr_to_abr.txt", ios::out | ios::trunc);
@@ -402,7 +431,7 @@ void tabrToAbr(TABR tabr)
 	 { 
 	//   //on recupere l'adresse de la racine
 	//   //on la colle au sad du max de l'arbre de la case d'avant
-
+	   
 	//   //on se place au maximum de l'arbre d'avant
 	   tmp = tabr.tableau.at(i-1).abr;
 	   while(tmp->sad != NULL)
@@ -410,14 +439,12 @@ void tabrToAbr(TABR tabr)
 	       tmp = tmp->sad;    
 	    }
 	   // tmp contient le noeud max
-	   tmp->sad = tabr.tableau.at(i).abr;
-
-	  // //tmp est le max de la case i--
+	  // tmp est le max de la case i--
 	   tmp->sad=tabr.tableau.at(i).abr;
-	}
-
+	 }
+      
       cout<<afficherABR(tabr.tableau[0].abr)<<endl;
-        fichier << afficherABR(tabr.tableau[0].abr);
+      fichier << afficherABR(tabr.tableau[0].abr);
       fichier.close();
     }
   else
