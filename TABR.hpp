@@ -42,5 +42,6 @@ bool verifierTABR(ArbreBinaire *abr);
 bool verifierABR(ArbreBinaire *abr, Intervalle i);
 bool verifierABRGauche(ArbreBinaire *abr, Intervalle i, int racine);
 bool verifierABRDroit(ArbreBinaire *abr, Intervalle i, int racine);
+void exportTABR(TABR tabr);
 
 #endif

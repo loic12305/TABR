@@ -7,11 +7,8 @@ int main()
        initialiser(tabr);
        parserFichier(tabr, "input.txt");
        cout << afficherT(tabr);
-       bool res = verifierTABR(tabr);
-       if(res)
-       		cout << "Vrai" << endl;
-       	else
-       		cout << "Faux" << endl;
+       //bool res = verifierTABR(tabr);
+       exportTABR(tabr);
 
     return 0;
 }
