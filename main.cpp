@@ -12,11 +12,14 @@ int main()
        //bool res = verifierTABR(tabr);
 
        exportTABR(tabr);
-       test = insertionEntier(tabr, 4);
-       if(test)
-	 cout << "Insertion Ok" << endl;
-       else
-	 cout << "Insertion KO" << endl;
+       // test = insertionEntier(tabr, 4);
+       // if(test)
+       // 	 cout << "Insertion Ok" << endl;
+       // else
+       // 	 cout << "Insertion KO" << endl;
+       // cout << afficherT(tabr);
+
+       suppressionEntier(tabr);
        cout << afficherT(tabr);
 
     return 0;

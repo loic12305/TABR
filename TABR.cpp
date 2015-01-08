@@ -4,7 +4,6 @@
 void initialiser(TABR &tabr)
 {
   tabr.nombreCase= 0;
-
 }
 
 
@@ -247,7 +246,7 @@ void exportTABR(TABR tabr)
     cerr << "Impossible d'ouvrir le fichier !" << endl;
 }
 
-bool insertionEntier(TABR &tabr, int val)
+bool insertionEntier(TABR &tabr)
 {
   int entree;
   bool test = false;
@@ -286,6 +285,94 @@ bool insertionEntier(TABR &tabr, int val)
     }
 
   return(resultat);
+}
+
+void suppriMax(ArbreBinaire *abr, int valeur)
+{
+  if(!abr)
+    {
+      cout << "SuppriMax" << endl;
+      valeur = abr->valeur;
+      abr = abr->sag;
+    }
+  else
+    {
+      suppriMax(abr->sad, valeur);
+    }
+}
+
+
+bool supprimerABR(ArbreBinaire **abr, int valeur)
+{
+  ArbreBinaire *tmpAbr = *abr;
+  int tmp;
+
+  if(valeur < tmpAbr->valeur)
+    {
+      supprimerABR(&tmpAbr->sag, valeur);
+    }
+  else
+    {
+      if(valeur > tmpAbr->valeur)
+	{
+	  supprimerABR(&tmpAbr->sad, valeur);
+	}
+      else
+	{
+	  cout << "passe Suppression" << endl;
+	  cout << "Valeur : " << tmpAbr->valeur << endl;
+	  if(!tmpAbr->sad)
+	    {
+	      cout << "passe Changement pointeur" << endl;
+	      tmpAbr = tmpAbr->sag;
+	      cout << "Valeur actualise : " << tmpAbr->valeur << endl;
+	    }
+	  else
+	    {
+	      suppriMax(tmpAbr->sag, valeur);
+	      tmpAbr->valeur = valeur;
+	    }
+	}
+    }
+}
+
+void suppressionEntier(TABR &tabr)
+{
+  int entree;
+  bool test = false;
+  bool resultat = false;
+  int i = 0;
+
+  cout << "*********Suppression d'un entier*********" << endl;
+  //test si la valeur est un entier
+  while (!test)
+    {
+      cout << "Entrez l'entier a supprimer" << endl;
+      cin >> entree;
+      if(cin.fail())
+	{
+	  cout << "mauvaise entree, la valeur attendue est un entier" << endl;
+	  cin.clear();
+	  cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+	}
+      else
+	{
+	  test = true;
+	}
+    }
+
+  while(i < tabr.nombreCase && resultat == false)
+    {
+      cout << tabr.tableau[i].intervalle.debut << " ";
+      cout << tabr.tableau[i].intervalle.fin << endl;
+      //On cherche la bonne intervalle
+      if((tabr.tableau[i].intervalle.debut <= entree) && (tabr.tableau[i].intervalle.fin >= entree))
+	{
+	  cout << "passe intervalle" << endl;
+	  resultat = supprimerABR(&tabr.tableau[i].abr, entree);
+	}
+      i++;
+    }
 }
 
 string afficherT(TABR tabr)
