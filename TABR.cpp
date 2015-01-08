@@ -463,7 +463,9 @@ void fusionTABR(TABR tabr,int indice)
       // tmp contient le noeud max
       //on ajoute a sad de max l'arbre i+1
       tmp->sad = tabr.tableau.at(indice+1).abr;
-      //   cout<<afficherABR(tabr.tableau[indice].abr)<<endl;
+      tabr.tableau.erase(tabr.tableau.begin() + 3);
+      tabr.nombreCase=tabr.nombreCase-1;
+      cout<<afficherABR(tabr.tableau[indice].abr)<<endl;
      
     }
 }
@@ -481,6 +483,7 @@ void tabrToAbr(TABR tabr)
       for(int i=tabr.nombreCase-1 ; i>0 ; i--)
 	fusionTABR(tabr,i-1);
 
+      tabr.nombreCase=1;
       cout << afficherABR(tabr.tableau[0].abr)<<endl;;
       fichier << afficherABR(tabr.tableau[0].abr);
       fichier.close();
