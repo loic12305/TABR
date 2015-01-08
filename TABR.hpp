@@ -47,6 +47,7 @@ bool verifierTABR(ArbreBinaire *abr);
 bool verifierABR(ArbreBinaire *abr, Intervalle i);
 bool verifierABRGauche(ArbreBinaire *abr, Intervalle i, int racine);
 bool verifierABRDroit(ArbreBinaire *abr, Intervalle i, int racine);
+void exportTABR(TABR tabr);
 void generer_aleatoire(int cases, int max);
 bool estPresent(vector<int> tab,int n);
 #endif

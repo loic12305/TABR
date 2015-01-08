@@ -133,36 +133,6 @@ void parserFichier(TABR &tabr, string fich)
     }
 }
 
-string afficherT(TABR tabr)
-{
-  int i = 0;
-  string resultat = "";
-  while(i < tabr.nombreCase)
-    {
-      resultat += to_string(tabr.tableau[i].intervalle.debut) +":" +  to_string(tabr.tableau[i].intervalle.fin);
-      resultat += ";";
-      resultat += afficherABR(tabr.tableau[i].abr);
-      resultat += "\n";
-      i++;
-    }
-  return(resultat);
-}
-
-string afficherABR(ArbreBinaire *abr)
-{
-  string resultat = "";
-
-  if(!abr) return resultat ;
-
-  if(abr->sag)  resultat += afficherABR(abr->sag);
-
-  resultat = resultat + to_string(abr->valeur) + ":";
-
-  if(abr->sad) resultat += afficherABR(abr->sad);
-
-  return(resultat);
-}
-
 bool verifierABRGauche(ArbreBinaire *abr, Intervalle i, int racine)
 {
   if(!abr)
@@ -253,6 +223,54 @@ bool verifierTABR(TABR tabr)
   return (resIntervalle && resAbr);
 }
 
+void exportTABR(TABR tabr)
+{
+  ofstream fichier("output.txt", ios::out | ios::trunc);
+
+  if(fichier)
+    {
+      fichier << afficherT(tabr);
+ 
+      fichier.close();
+    }
+  else
+    cerr << "Impossible d'ouvrir le fichier !" << endl;
+}
+
+string afficherT(TABR tabr)
+{
+  int i = 0;
+  string resultat = "";
+  string tmp = "";
+
+  while(i < tabr.nombreCase)
+    {
+      resultat += to_string(tabr.tableau[i].intervalle.debut) +":" +  to_string(tabr.tableau[i].intervalle.fin);
+      resultat += ";";
+      tmp = afficherABR(tabr.tableau[i].abr);
+      tmp.replace(tmp.size()-1,1,"");
+      resultat += tmp;
+      resultat += "\n";
+      i++;
+    }
+  return(resultat);
+}
+
+string afficherABR(ArbreBinaire *abr)
+{
+  string resultat = "";
+
+  if(!abr) return resultat ;
+
+  if(abr->sag)  resultat += afficherABR(abr->sag);
+
+  if(abr->sad) resultat += afficherABR(abr->sad);
+
+  resultat = resultat + to_string(abr->valeur) + ":";
+
+  return(resultat);
+}
+
 
 ///////////////////////////////////////////////
 // Générer tout un TABR de maniere aléatoire //
@@ -314,7 +332,6 @@ void generer_aleatoire(int n, int m)
 
       //cree la case
       c.intervalle = intervalle;
-
       arbre = NULL; //cree un arbre
       
       c.abr = arbre; //ajout de l'arbre
