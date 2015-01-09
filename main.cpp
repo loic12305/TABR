@@ -89,8 +89,8 @@ int main()
 	case 4:
 	  {
 	    cout<<"Saisir un entier à inserer"<<endl;
-
-	    if(insertionEntier(tabr, 4))
+	    cin>>n;
+	    if(insertionEntier(tabr, n))
 	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion Ok \033[0m    \n\n" << endl;
 	    else
 	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion raté \033[0m    \n\n" << endl;
@@ -98,12 +98,14 @@ int main()
 	case 5:
 	  {
 	    cout<<"Saisir un entier à supprimer"<<endl;
-	    insertionEntier(tabr, 4)
-
-	    if(insertionEntier(tabr, 4))
-	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion Ok \033[0m    \n\n" << endl;
-	    else
-	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion raté \033[0m    \n\n" << endl;
+	    cin>>n;
+	    supprimerABR(&abr, int n);
+	  }
+	case 6:
+	  {
+	    cout<<"Saisir la case i qui "<<endl;
+	    cin>>n;
+	    supprimerABR(&abr, int n);
 	  }
 	}
 
