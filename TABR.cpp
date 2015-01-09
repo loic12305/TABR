@@ -399,9 +399,13 @@ string afficherT(TABR tabr)
     {
       resultat += to_string(tabr.tableau[i].intervalle.debut) +":" +  to_string(tabr.tableau[i].intervalle.fin);
       resultat += ";";
-      tmp = afficherABR(tabr.tableau[i].abr);
-      tmp.replace(tmp.size()-1,1,"");
-      resultat += tmp;
+      
+      if(tabr.tableau[i].abr)
+	{
+	  tmp = afficherABR(tabr.tableau[i].abr);
+	  tmp.replace(tmp.size()-1,1,"");
+	  resultat += tmp;
+	}
       resultat += "\n";
       i++;
     }
