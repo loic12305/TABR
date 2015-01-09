@@ -2,7 +2,6 @@
 
 int main()
 {
-<<<<<<< HEAD
 
   bool quit=false,saisieOK=false;
   int saisie,n,m;
@@ -58,7 +57,6 @@ int main()
 	  {
 	    cout<<"\n\n\n\n\n\n\n \033[1;31m    AFFICHAGE TABR\033[0m   \n\n"<<endl;
 	    cout << afficherT(tabr);
-	    cout<<" \n\n\n"<<end;
 	    break;
 	  }
 	case 3:
@@ -85,30 +83,43 @@ int main()
 		saisieOK=true;
 	    }
 	    tabr = generer_aleatoire(n,m);
+	    break;
 	  }
 	case 4:
 	  {
-	    cout<<"Saisir un entier à inserer"<<endl;
-	    cin>>n;
-	    if(insertionEntier(tabr, n))
+	    if(insertionEntier(tabr))
 	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion Ok \033[0m    \n\n" << endl;
 	    else
 	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion raté \033[0m    \n\n" << endl;
+	    break;
 	  }
 	case 5:
 	  {
-	    cout<<"Saisir un entier à supprimer"<<endl;
-	    cin>>n;
-	    supprimerABR(&abr, int n);
+	    suppressionEntier(tabr);
+	    break;
 	  }
 	case 6:
 	  {
-	    cout<<"Saisir la case i qui "<<endl;
+	    cout<<"Saisir la case i qui fusionnera avec i+1"<<endl;
 	    cin>>n;
-	    supprimerABR(&abr, int n);
+	    fusionTABR(tabr,n-1);
+	    cout<<"\n\n\n\n\n\n\n \033[1;31m   Fusion de la case "<<n+1<<" dans la case "<<n<<"\033[0m    \n\n\n\n\n"<<endl;	  
+	    break;
 	  }
+	case 7:
+	  {
+	    tabrToAbr(tabr);
+	    cout<<"\n\n\n\n\n\n\n \033[1;31m   Le TABR est maintenant un ABR \033[0m    \n\n\n\n\n"<<endl;	  
+	    break;
+	  }
+	case 0:
+	  {
+	    quit=true;
+	    break;
+	  }
+	  
 	}
-
+      
       saisieOK=false;
       
     }

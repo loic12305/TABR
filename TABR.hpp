@@ -53,6 +53,6 @@ bool estPresent(vector<int> tab,int n);
 void fusion(TABR tabr,int indice);
 void tabrToAbr(TABR tabr);
 bool insertionEntier(TABR &tabr);
-void suppressionEntier(TABR &tabr, int val);
+void suppressionEntier(TABR &tabr);
 
 #endif
