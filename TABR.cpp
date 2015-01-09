@@ -293,11 +293,9 @@ void suppriMax(ArbreBinaire **abr, int valeur)
 
   ArbreBinaire *tmpAbr = *abr;
   ArbreBinaire *tmpTest = tmpAbr->sad;
-  cout << "SuppriMax" << endl;
 
   if((tmpAbr->sad) == NULL)
     {
-      cout << "ici" << endl;
       valeur = tmpAbr->valeur;
       tmpAbr = tmpAbr->sag;
     }
@@ -312,7 +310,6 @@ void suppriMax(ArbreBinaire **abr, int valeur)
 
 void supprimerABR(ArbreBinaire **abr, int valeur)
 {
-  cout << "Supprimer ABR" << endl;
   ArbreBinaire *tmpAbr = *abr;
   
   if(tmpAbr)
@@ -355,10 +352,9 @@ void suppressionEntier(TABR &tabr)
 {
   int entree;
   bool test = false;
-  bool resultat = false;
+  bool trouve = false;
   int i = 0;
 
-  cout << "*********Suppression d'un entier*********" << endl;
   //test si la valeur est un entier
   while (!test)
     {
@@ -376,19 +372,20 @@ void suppressionEntier(TABR &tabr)
 	}
     }
 
-  while(i < tabr.nombreCase && resultat == false)
+  while(i < tabr.nombreCase && trouve == false)
     {
-      cout << tabr.tableau[i].intervalle.debut << " ";
-      cout << tabr.tableau[i].intervalle.fin << endl;
       //On cherche la bonne intervalle
       if((tabr.tableau[i].intervalle.debut <= entree) && (tabr.tableau[i].intervalle.fin >= entree))
 	{
-	  cout << "passe intervalle" << endl;
+	  trouve = true;
 	  supprimerABR(&(tabr.tableau[i].abr), entree);
-	  cout << "Valeur fin boucle : " << tabr.tableau[i].abr->valeur << endl;
-	  cout << afficherABR(tabr.tableau[i].abr) << endl;
 	}
       i++;
+    }
+
+  if(!trouve)
+    {
+      cout << "aucun intervalle ne contient cette valeur" << endl;
     }
 }
 
@@ -402,6 +399,7 @@ string afficherT(TABR tabr)
     {
       resultat += to_string(tabr.tableau[i].intervalle.debut) +":" +  to_string(tabr.tableau[i].intervalle.fin);
       resultat += ";";
+
       if(tabr.tableau[i].abr)
 	{
 	  tmp = afficherABR(tabr.tableau[i].abr);
