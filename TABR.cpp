@@ -4,7 +4,6 @@
 void initialiser(TABR &tabr)
 {
   tabr.nombreCase= 0;
-
 }
 
 
@@ -81,6 +80,7 @@ void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
   suffixe.clear();
   suffixe_abr(c.abr, suffixe);
 
+  //verification que le TABR correspond au suffixe
   //ils ont forcement la meme taille
   for(int j=0; j<suffixe.size(); j++)
     {
@@ -247,7 +247,7 @@ void exportTABR(TABR tabr)
     cerr << "Impossible d'ouvrir le fichier !" << endl;
 }
 
-bool insertionEntier(TABR &tabr, int val)
+bool insertionEntier(TABR &tabr)
 {
   int entree;
   bool test = false;
@@ -286,6 +286,110 @@ bool insertionEntier(TABR &tabr, int val)
     }
 
   return(resultat);
+}
+
+void suppriMax(ArbreBinaire **abr, int valeur)
+{
+
+  ArbreBinaire *tmpAbr = *abr;
+  ArbreBinaire *tmpTest = tmpAbr->sad;
+  cout << "SuppriMax" << endl;
+
+  if((tmpAbr->sad) == NULL)
+    {
+      cout << "ici" << endl;
+      valeur = tmpAbr->valeur;
+      tmpAbr = tmpAbr->sag;
+    }
+  else
+    {
+      suppriMax(&tmpAbr->sad, valeur);
+    }
+
+  *abr = tmpAbr;
+}
+
+
+void supprimerABR(ArbreBinaire **abr, int valeur)
+{
+  cout << "Supprimer ABR" << endl;
+  ArbreBinaire *tmpAbr = *abr;
+  
+  if(tmpAbr)
+    {
+      if(valeur < tmpAbr->valeur)
+	{
+	  supprimerABR(&tmpAbr->sag, valeur);
+	}
+      else
+	{
+	  if(valeur > tmpAbr->valeur)
+	    {
+	      supprimerABR(&tmpAbr->sad, valeur);
+	    }
+	  else
+	    {
+	      if(!tmpAbr->sag)
+		{
+		  tmpAbr = tmpAbr->sad;
+		}
+	      else
+		{
+		  if(!tmpAbr->sad)
+		    {
+		      tmpAbr = tmpAbr->sag;
+		    }
+		  else
+		    {
+		      suppriMax(&tmpAbr->sag, valeur);
+		      tmpAbr->valeur = valeur;
+		    }
+		}
+	    }
+	}
+      *abr = tmpAbr;
+    }
+}
+
+void suppressionEntier(TABR &tabr)
+{
+  int entree;
+  bool test = false;
+  bool resultat = false;
+  int i = 0;
+
+  cout << "*********Suppression d'un entier*********" << endl;
+  //test si la valeur est un entier
+  while (!test)
+    {
+      cout << "Entrez l'entier a supprimer" << endl;
+      cin >> entree;
+      if(cin.fail())
+	{
+	  cout << "mauvaise entree, la valeur attendue est un entier" << endl;
+	  cin.clear();
+	  cin.ignore( numeric_limits<streamsize>::max(), '\n' );
+	}
+      else
+	{
+	  test = true;
+	}
+    }
+
+  while(i < tabr.nombreCase && resultat == false)
+    {
+      cout << tabr.tableau[i].intervalle.debut << " ";
+      cout << tabr.tableau[i].intervalle.fin << endl;
+      //On cherche la bonne intervalle
+      if((tabr.tableau[i].intervalle.debut <= entree) && (tabr.tableau[i].intervalle.fin >= entree))
+	{
+	  cout << "passe intervalle" << endl;
+	  supprimerABR(&(tabr.tableau[i].abr), entree);
+	  cout << "Valeur fin boucle : " << tabr.tableau[i].abr->valeur << endl;
+	  cout << afficherABR(tabr.tableau[i].abr) << endl;
+	}
+      i++;
+    }
 }
 
 string afficherT(TABR tabr)

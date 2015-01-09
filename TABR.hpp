@@ -52,6 +52,7 @@ void generer_aleatoire(int cases, int max);
 bool estPresent(vector<int> tab,int n);
 void fusion(TABR tabr,int indice);
 void tabrToAbr(TABR tabr);
-bool insertionEntier(TABR &tabr, int val);
+bool insertionEntier(TABR &tabr);
+void suppressionEntier(TABR &tabr, int val);
 
 #endif

@@ -13,6 +13,7 @@ int main()
        // cout << afficherT(tabr);
        //bool res = verifierTABR(tabr);
 
+
        // exportTABR(tabr);
        // test = insertionEntier(tabr, 4);
        // if(test)
@@ -20,6 +21,11 @@ int main()
        // else
        // 	 cout << "Insertion KO" << endl;
        // cout << afficherT(tabr);
+
+       suppressionEntier(tabr);
+       cout << "Main : " << endl;
+       cout << afficherT(tabr);
+
 
     return 0;
 }
