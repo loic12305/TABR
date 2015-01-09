@@ -94,7 +94,6 @@ void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
     {
       tabr.tableau.push_back(c);
       tabr.nombreCase++;
-      //cout << "ajout de la ligne OK" << endl;
     }
   else
     {
@@ -186,7 +185,7 @@ bool verifierABR(ArbreBinaire *abr, Intervalle i)
       //si la valeur du noeud respecte les contraintes de l'intervalle, alors on vérifie les noeuds du SAG et du SAD
       if((abr->valeur >= i.debut) && (abr->valeur <= i.fin))
 	{
-	  cout << abr->valeur << endl;
+	  //cout << abr->valeur << endl;
 	  bool res1 = verifierABRGauche(abr->sag, i, abr->valeur);
 	  bool res2 = verifierABRDroit(abr->sad, i, abr->valeur);
 	  return (res1 && res2);
@@ -226,7 +225,7 @@ bool verifierTABR(TABR tabr)
       //On teste la composition de l'arbre que si l'intervalle est correcte
       if(resIntervalle == true)
 	resAbr = verifierABR(tabr.tableau[i].abr, tabr.tableau[i].intervalle);
-      cout << i << endl;
+      //cout << i << endl;
       i++;
     }
 
@@ -274,8 +273,8 @@ bool insertionEntier(TABR &tabr)
 
   while(i < tabr.nombreCase && resultat == false)
     {
-      cout << tabr.tableau[i].intervalle.debut << " ";
-      cout << tabr.tableau[i].intervalle.fin << endl;
+      //cout << tabr.tableau[i].intervalle.debut << " ";
+      //cout << tabr.tableau[i].intervalle.fin << endl;
       //On cherche la bonne intervalle
       if((tabr.tableau[i].intervalle.debut <= entree) && (tabr.tableau[i].intervalle.fin >= entree))
 	{
@@ -508,10 +507,10 @@ TABR generer_aleatoire(int n, int m) //n nombre de case // m le max de tout les 
 
   for(int i=0 ; i<tabr.nombreCase ;i++)
     {
-      cout<<tabr.tableau.at(i).intervalle.debut<<".."<<tabr.tableau.at(i).intervalle.fin<<endl;
+      //cout<<tabr.tableau.at(i).intervalle.debut<<".."<<tabr.tableau.at(i).intervalle.fin<<endl;
       nb_elmt_max = (tabr.tableau.at(i).intervalle.fin - tabr.tableau.at(i).intervalle.debut) +1; //nb element max de l'arbre
       nb_elmt = rand()%(nb_elmt_max-1)+1; //nb element random
-      cout<<nb_elmt<<endl; // nb le rand à generer
+      //cout<<nb_elmt<<endl; // nb le rand à generer
 
       tab_rand.clear();
  
@@ -570,7 +569,7 @@ void fusionTABR(TABR tabr,int indice)
       tmp->sad = tabr.tableau.at(indice+1).abr;
       tabr.tableau.erase(tabr.tableau.begin() + 3);
       tabr.nombreCase=tabr.nombreCase-1;
-      cout<<afficherABR(tabr.tableau[indice].abr)<<endl;
+      //cout<<afficherABR(tabr.tableau[indice].abr)<<endl;
      
     }
 }
