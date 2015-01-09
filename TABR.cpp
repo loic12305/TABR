@@ -326,7 +326,7 @@ string afficherABR(ArbreBinaire *abr)
 ///////////////////////////////////////////////
 // Générer tout un TABR de maniere aléatoire //
 ///////////////////////////////////////////////
-void generer_aleatoire(int n, int m) //n nombre de case // m le max de tout les intervalles
+TABR generer_aleatoire(int n, int m) //n nombre de case // m le max de tout les intervalles
 {
   int nb_elmt_max,nb_elmt,nb_rand,nombre_aleatoire;
   TABR tabr;
@@ -427,7 +427,7 @@ void generer_aleatoire(int n, int m) //n nombre de case // m le max de tout les 
 
   int i = 0;
   
-  cout<<afficherT(tabr);
+  return abr;
   
 }
 
