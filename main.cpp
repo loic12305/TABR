@@ -7,6 +7,9 @@ int main()
   int saisie,n,m;
   TABR tabr;  
   system("clear");
+  initialiser(tabr);
+  parserFichier(tabr, "input.txt");
+
   while(!quit)
     {
       saisieOK = false;

@@ -589,7 +589,8 @@ void tabrToAbr(TABR tabr)
 	fusionTABR(tabr,i-1);
 
       tabr.nombreCase=1;
-      cout << afficherABR(tabr.tableau[0].abr)<<endl;;
+      cout << "Le TABR a été fusionné en ABR : cf tabr_to_abr.txt"<<endl;
+      cout << afficherABR(tabr.tableau[0].abr)<<endl;
       fichier << afficherABR(tabr.tableau[0].abr);
       fichier.close();
     }
