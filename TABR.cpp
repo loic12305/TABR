@@ -427,7 +427,7 @@ TABR generer_aleatoire(int n, int m) //n nombre de case // m le max de tout les 
 
   int i = 0;
   
-  return abr;
+  return tabr;
   
 }
 

@@ -6,11 +6,13 @@ int main()
   bool quit=false,saisieOK=false;
   int saisie,n,m;
   TABR tabr;  
+  system("clear");
   while(!quit)
     {
       saisieOK = false;
       while (!saisieOK)
 	{
+	  //  system("clear");
 	  cout<<"======================================="<<endl;
 	  cout<<"=========  GESTION TABR  =============="<<endl;
 	  cout<<"======================================="<<endl;
@@ -48,11 +50,14 @@ int main()
 	case 1: {
 	  initialiser(tabr);
 	  parserFichier(tabr, "input.txt");
+	  cout<<"\n\n\n\n\n\n\n \033[1;31m    TABR généré\033[0m    \n\n\n\n\n"<<endl;	  
 	  break;
 	}
 	case 2:
 	  {
+	    cout<<"\n\n\n\n\n\n\n \033[1;31m    AFFICHAGE TABR\033[0m   \n\n"<<endl;
 	    cout << afficherT(tabr);
+	    cout<<" \n\n\n"<<end;
 	    break;
 	  }
 	case 3:
@@ -79,6 +84,25 @@ int main()
 		saisieOK=true;
 	    }
 	    tabr = generer_aleatoire(n,m);
+	  }
+	case 4:
+	  {
+	    cout<<"Saisir un entier à inserer"<<endl;
+
+	    if(insertionEntier(tabr, 4))
+	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion Ok \033[0m    \n\n" << endl;
+	    else
+	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion raté \033[0m    \n\n" << endl;
+	  }
+	case 5:
+	  {
+	    cout<<"Saisir un entier à supprimer"<<endl;
+	    insertionEntier(tabr, 4)
+
+	    if(insertionEntier(tabr, 4))
+	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion Ok \033[0m    \n\n" << endl;
+	    else
+	      cout << "\n\n\n\n\n\n\n \033[1;31m Insertion raté \033[0m    \n\n" << endl;
 	  }
 	}
 
