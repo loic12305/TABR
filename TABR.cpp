@@ -80,6 +80,7 @@ void creerCaseArbre(TABR &tabr, vector<int> tab, int deb, int fin)
   suffixe.clear();
   suffixe_abr(c.abr, suffixe);
 
+  //verification que le TABR correspond au suffixe
   //ils ont forcement la meme taille
   for(int j=0; j<suffixe.size(); j++)
     {
@@ -287,52 +288,66 @@ bool insertionEntier(TABR &tabr)
   return(resultat);
 }
 
-void suppriMax(ArbreBinaire *abr, int valeur)
+void suppriMax(ArbreBinaire **abr, int valeur)
 {
-  if(!abr)
+
+  ArbreBinaire *tmpAbr = *abr;
+  ArbreBinaire *tmpTest = tmpAbr->sad;
+  cout << "SuppriMax" << endl;
+
+  if((tmpAbr->sad) == NULL)
     {
-      cout << "SuppriMax" << endl;
-      valeur = abr->valeur;
-      abr = abr->sag;
+      cout << "ici" << endl;
+      valeur = tmpAbr->valeur;
+      tmpAbr = tmpAbr->sag;
     }
   else
     {
-      suppriMax(abr->sad, valeur);
+      suppriMax(&tmpAbr->sad, valeur);
     }
+
+  *abr = tmpAbr;
 }
 
 
-bool supprimerABR(ArbreBinaire **abr, int valeur)
+void supprimerABR(ArbreBinaire **abr, int valeur)
 {
+  cout << "Supprimer ABR" << endl;
   ArbreBinaire *tmpAbr = *abr;
-  int tmp;
-
-  if(valeur < tmpAbr->valeur)
+  
+  if(tmpAbr)
     {
-      supprimerABR(&tmpAbr->sag, valeur);
-    }
-  else
-    {
-      if(valeur > tmpAbr->valeur)
+      if(valeur < tmpAbr->valeur)
 	{
-	  supprimerABR(&tmpAbr->sad, valeur);
+	  supprimerABR(&tmpAbr->sag, valeur);
 	}
       else
 	{
-	  cout << "passe Suppression" << endl;
-	  cout << "Valeur : " << tmpAbr->valeur << endl;
-	  if(!tmpAbr->sad)
+	  if(valeur > tmpAbr->valeur)
 	    {
-	      cout << "passe Changement pointeur" << endl;
-	      tmpAbr = tmpAbr->sag;
-	      cout << "Valeur actualise : " << tmpAbr->valeur << endl;
+	      supprimerABR(&tmpAbr->sad, valeur);
 	    }
 	  else
 	    {
-	      suppriMax(tmpAbr->sag, valeur);
-	      tmpAbr->valeur = valeur;
+	      if(!tmpAbr->sag)
+		{
+		  tmpAbr = tmpAbr->sad;
+		}
+	      else
+		{
+		  if(!tmpAbr->sad)
+		    {
+		      tmpAbr = tmpAbr->sag;
+		    }
+		  else
+		    {
+		      suppriMax(&tmpAbr->sag, valeur);
+		      tmpAbr->valeur = valeur;
+		    }
+		}
 	    }
 	}
+      *abr = tmpAbr;
     }
 }
 
@@ -369,7 +384,9 @@ void suppressionEntier(TABR &tabr)
       if((tabr.tableau[i].intervalle.debut <= entree) && (tabr.tableau[i].intervalle.fin >= entree))
 	{
 	  cout << "passe intervalle" << endl;
-	  resultat = supprimerABR(&tabr.tableau[i].abr, entree);
+	  supprimerABR(&(tabr.tableau[i].abr), entree);
+	  cout << "Valeur fin boucle : " << tabr.tableau[i].abr->valeur << endl;
+	  cout << afficherABR(tabr.tableau[i].abr) << endl;
 	}
       i++;
     }

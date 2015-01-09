@@ -20,6 +20,7 @@ int main()
        // cout << afficherT(tabr);
 
        suppressionEntier(tabr);
+       cout << "Main : " << endl;
        cout << afficherT(tabr);
 
     return 0;
