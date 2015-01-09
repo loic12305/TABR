@@ -2,6 +2,7 @@
 
 int main()
 {
+<<<<<<< HEAD
 
   bool quit=false,saisieOK=false;
   int saisie,n,m;
