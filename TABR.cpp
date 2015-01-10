@@ -548,12 +548,12 @@ bool estPresent(vector<int> tab,int n)
 ///////////////////////////////
 // Fusion la case i avec i+1 //
 ///////////////////////////////
-void fusionTABR(TABR tabr,int indice)
+void fusionTABR(TABR &tabr,int indice)
 {
 
   ArbreBinaire *tmp = NULL;
   
-  if(indice >= tabr.nombreCase)
+  if(indice >= tabr.nombreCase || indice < 0 )
     cerr<<"Indice invalide"<<endl;
   else
     {
@@ -567,7 +567,7 @@ void fusionTABR(TABR tabr,int indice)
       // tmp contient le noeud max
       //on ajoute a sad de max l'arbre i+1
       tmp->sad = tabr.tableau.at(indice+1).abr;
-      tabr.tableau.erase(tabr.tableau.begin() + 3);
+      tabr.tableau.erase(tabr.tableau.begin() + indice+1);
       tabr.nombreCase=tabr.nombreCase-1;
       //cout<<afficherABR(tabr.tableau[indice].abr)<<endl;
      
