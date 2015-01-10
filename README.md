@@ -1,10 +1,10 @@
 # Projet algorithmique - Tableau d'ABR
 
-Projet réalisé par Loi ENTRESSANGLE et Boris LEBRUN
+Projet réalisé par Loïc ENTRESSANGLE et Boris LEBRUN
 
 ## Compile
 
-- g++: `g++ -g main.cpp -std=c++0x -o bin/pgm`
+- g++ :  `g++ -g main.cpp -std=c++0x -o bin/pgm`
 
 ## How To Use
 
@@ -14,5 +14,5 @@ Projet réalisé par Loi ENTRESSANGLE et Boris LEBRUN
 
 ## Support Future Development
 
-Boris LEBRUN : `boris.lebrun@etu.univ-nantes.fr`
-Loïc ENTRESSANGLE : `loic.entressangle@etu.univ-nantes.fr`
+- Boris LEBRUN : `boris.lebrun@etu.univ-nantes.fr`
+- Loïc ENTRESSANGLE : `loic.entressangle@etu.univ-nantes.fr`
